@@ -1,0 +1,22 @@
+<doctrine-mapping
+        xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+        https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+    <entity name="App\Comment\Comment" table="comments">
+        <id name="identifier" column="uuid" length="36">
+            <generator strategy="NONE" />
+        </id>
+        <field name="comment" type="text" />
+        <field name="author" />
+        <field name="createdAt" type="datetime" />
+        <embedded name="commentParentId" class="App\Comment\CommentParentId" column-prefix="parent_" />
+
+        <indexes>
+            <index name="parent_idx" columns="parent_uuid,parent_commentable" />
+            <index name="created_at_idx" columns="created_at" />
+        </indexes>
+    </entity>
+
+</doctrine-mapping>

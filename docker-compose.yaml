@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    volumes:
+      - ./:/var/www/html:cached
+    ports:
+      - 8088:80
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: symfony
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: symfony_user
+      MYSQL_PASSWORD: symfony_pass
+    volumes:
+      - ./docker/mysql/initdb.sql.gz:/docker-entrypoint-initdb.d/initdb.sql.gz
